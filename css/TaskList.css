@@ -1,0 +1,117 @@
+/* Rule for the Sweet Alert window border */
+div.swal2-container.swal2-center.swal2-backdrop-show > div {   
+    border: 2px solid black;
+}
+
+/* Rule for the Sweet Alert image */
+.swal2-image {       
+    box-shadow: 10px 10px 16px #212121;
+}
+
+/* Rule for the custom orange text with black outline */
+.cool-text {
+    color: #ff993b;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;   
+}
+
+/* Rule for the custom black text with orange outline */
+.cool-text-inverse {
+    color: black;
+    text-shadow: -2px 0 #ff993b, 0 1px #ff993b, 1px 0 #ff993b, 0 -1px #ff993b;   
+}
+
+/* Rule for landing page background gradient */
+.landing-body {
+    background: rgb(33,33,33);
+    background: linear-gradient(90deg, rgba(33,33,33,1) 0%, rgba(255,153,59,0.3561799719887955) 100%);
+}
+
+/* Rule for the three column card header */
+.cool-header {    
+    background-color: antiquewhite;   
+}
+
+/* Rule for the cards border & outline */
+.cool-border {    
+    outline: 2px solid black;
+    border: 1px solid orange;
+}
+
+/* Help with card body vertical positioning */
+.card-body {
+    padding-top: .5rem;
+    padding-bottom: .25rem;
+}
+
+.task-body .navbar-dark {
+border-bottom: 5px solid #ff993b;
+
+}
+
+/* Text color and weight for eTaskifier-er*/
+.navbar-dark .navbar-brand {
+    color: #ff993b;
+    font-weight: bold;
+}
+
+
+/* Side nav styling hr */
+.side-nav .col-2 {
+    height: calc(100vh - 80px);
+    border-right: 5px solid #ff993b;
+    max-width: max-content;    
+}
+
+/* Side nav styling hr */
+.side-nav hr {
+    margin-top: 0;   
+}
+
+/* Link color on side nav */
+.side-nav .nav-link {
+    color: #ff993b
+}
+
+/* Rule to make the link text grow */
+.side-nav .nav-item > a:hover {
+    transition: all .2s ease-in-out; 
+    transform: scale(1.2);
+    padding-left: 30px;
+}
+
+/* Rule to keep the drop down menu background black on hover*/
+.dropdown-item:focus, .dropdown-item:hover {
+    background-color: unset;
+} 
+
+
+/* HR on Dashboard page */
+hr.cool-line {
+    margin-top: 20px;
+    outline: 2px solid #ff993b;
+    border: 2px solid black;
+}
+
+.tooltip-inner {
+    background-color: #ff993b;     
+    border: 2px solid #212121;
+    font-weight: bold;
+    color: #212121;   
+}
+
+/* Represents the first four elements. [=-0+4, -1+4, -2+4, -3+4] */
+tr.complete > td:nth-child(-n+4) {
+    text-decoration: line-through;
+} 
+
+.modal-header {  
+    border-bottom: 2px solid black;
+   
+}
+
+
+
+
+
+
+

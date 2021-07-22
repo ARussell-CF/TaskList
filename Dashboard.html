@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/TaskList.css">
+  </head>
+    <body class="task-body">
+        <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #212121;">
+            <a class="navbar-brand" href="Index.html">eTASKIFIER-ER</a>
+            <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                aria-expanded="false" aria-label="Toggle navigation"></button>
+            <div class="collapse navbar-collapse ml-5" id="collapsibleNavId">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">               
+                    <li class="nav-item active">
+                        <a class="nav-link font-weight-bold" href="Dashboard.html" id="dropdownId">TASK DASHBOARD</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" id="txtSearch">
+                    <button id="btnSearch" class="btn btn-outline-warning my-2 my-sm-0" type="button">Search</button>
+                </form>
+            </div>
+        </nav>
+
+
+        <div class="row side-nav">
+            <div class="col-2" style="background-color: #212121;">            
+                <ul class="nav flex-column mt-5">
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bold" data-toggle="modal" data-target="#newTaskItem" href="#"><i class="fa fa-tachometer-alt pr-3"></i>CREATE TASK</a>
+                    </li>
+                    <li class="nav-item">
+                        <a onclick="ClearTasks()" class="nav-link font-weight-bold" href="#"><i class="fa fa-eraser pr-3"></i>CLEAR TASKS</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle font-weight-bold" data-toggle="dropdown" href="#"><i class="fa fa-filter pr-3"></i>TASKS BY STATUS</a>
+                        <div class="dropdown-menu bg-dark border border-warning">
+                            <a onclick="FilterAll()" class="dropdown-item font-weight-bold text-white text-center text-uppercase" href="#">All Tasks</a>
+                            <div class="dropdown-divider"></div>
+                            <a onclick="FilterInComplete()" class="dropdown-item font-weight-bold text-white" href="#"><i class="fa fa-times pr-3 text-warning"></i>Incomplete</a>
+                            <a onclick="FilterOverDue()" class="dropdown-item font-weight-bold text-white" href="#"><i class="fa fa-calendar-times pr-3 text-danger"></i>Overdue</a>
+                            <a onclick="FilterCompleted()" class="dropdown-item font-weight-bold text-white" href="#"><i class="fa fa-check pr-3 text-success"></i>Completed</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <div class="row mt-5">
+                    <div class="col text-center h2 font-weight-bold">
+                        <span class="cool-text mb-5" id="taskCount"></span>                                
+                    </div>
+                </div>                             
+                <hr class="cool-line">
+                <div class="row">
+                    <div class="offset-2 col-8">
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" data-toggle="modal" data-target="#newTaskItem" class="btn btn-default btn-block btn-outline-dark mb-2 font-weight-bold" >
+                                    CREATE TASK
+                                </button>        
+                            </div>
+                            <div class="col">
+                                <button onclick="ClearTasks()" type="button" class="btn btn-default btn-block btn-outline-danger mb-2 font-weight-bold">
+                                    CLEAR TASKS
+                                </button>        
+                            </div>
+                            <div class="col">
+                                <button onclick="FilterAll()" type="button" class="btn btn-default btn-block btn-outline-success mb-2 font-weight-bold">
+                                    CLEAR FILTER
+                                </button>        
+                            </div>
+                        </div>
+                        <div class="table-responsive">                            
+                            <table class="table table-striped" id="eventData">
+                                <thead class="thead-dark">
+                                    <tr>        
+                                        <th class="d-none"></th>                                
+                                        <th>Title</th>
+                                        <th>Created</th>
+                                        <th>Due Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="taskBody">
+                                    <!--Data goes here-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    <!-- Template tag for helping me output data -->
+    <template id="taskItem-template">
+        <tr id="TaskRow">
+            <td class="d-none" id="id"></td>
+            <td id="title"></td>
+            <td id="created"></td>           
+            <td id="dueDate"></td>
+            <td id="tdCrud">
+                <a onclick="CompleteTask(this)" class="btn btn-sm btn-outline-dark" data-toggle="tooltip" data-placement="left" title="Mark Task Completed"><i class="text-success fas fa-check"></i></a>
+                <a onclick="PopEditModal(this)" class="btn btn-sm btn-outline-dark" data-toggle="tooltip" data-placement="bottom" title="Edit Task"><i class="text-primary fas fa-pencil-alt"></i></a>
+                <a onclick="DeleteTask(this)" class="btn btn-sm btn-outline-dark"  data-toggle="tooltip" data-placement="top" title="Delete Task"><i class="text-danger fas fa-trash-alt"></i></a>
+                </div>
+            </td>
+        </tr>
+    </template>
+    
+
+    <!-- Modal window for adding a new Task -->
+    <!-- The Modal -->
+     <div class="modal" id="newTaskItem">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content cool-border">
+
+                <!-- Modal Header -->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title cool-text-inverse">Add New Task</h4>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form onsubmit="CreateTask(this)">
+                        <input type="hidden" name="ModalCreate" value="true" />
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="Title">Title:</label>
+                            <input type="text" class="form-control cool-border" name="Title" id="Title" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="DueDate">Due Date:</label>
+                            <input type="date" class="form-control cool-border" name="DueDate" id="DueDate" />
+                        </div>
+                        <button type="submit" class="btn btn-dark btn-outline-warning btn-wide">Submit</button>
+                    </form>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark btn-outline-warning" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+          
+    <!-- Modal window for adding a new Task -->
+    <!-- The Modal -->
+    <div class="modal" id="editTaskItem">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content cool-border">
+
+                <!-- Modal Header -->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title cool-text-inverse">Edit Task</h4>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form onsubmit="EditTask(this)">
+                        <input type="hidden" name="ModalCreate" value="true" />
+                        <input type="hidden" id="TaskId" />
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="name">Title:</label>
+                            <input type="text" class="form-control cool-border" name="Title" id="NewTitle">
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="description">Due Date:</label>
+                            <input type="date" class="form-control cool-border" name="NewDueDate" id="NewDueDate" />
+                        </div>
+                        <button type="submit" class="btn btn-dark btn-outline-warning btn-wide">Submit</button>
+                    </form>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark btn-outline-warning" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+   
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="/js/crud.js"></script>
+   
+  </body>
+</html>
